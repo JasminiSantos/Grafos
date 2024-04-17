@@ -10,6 +10,7 @@ class Grafo:
         self.ponderado = ponderado
         self.num_vertices = 0
         self.num_arestas = 0
+        print(self.ponderado)
 
     def adiciona_vertice(self, u):
         if u not in self.lista_adjacencias:
@@ -19,8 +20,10 @@ class Grafo:
     def adiciona_aresta(self, u, v, peso=1):
         if not self.ponderado:
             peso = 1
+
         if v not in self.lista_adjacencias:
             self.adiciona_vertice(v)
+
         if not any(aresta for aresta in self.lista_adjacencias[u] if aresta[0] == v):
             self.lista_adjacencias[u].append((v, peso))
             if not self.direcionado:
@@ -28,6 +31,15 @@ class Grafo:
             self.num_arestas += 1
             if not self.direcionado and u != v:
                 self.num_arestas += 1
+        else:
+            for to in self.lista_adjacencias[u]:
+                if to[0] == v:
+                    segundo_valor = to[1]
+                    novo_segundo_valor = segundo_valor + 1  
+                    nova_tupla = (to[0], novo_segundo_valor)
+                    indice = self.lista_adjacencias[u].index(to)
+                    self.lista_adjacencias[u][indice] = nova_tupla
+                    print(nova_tupla)
 
     def remove_aresta(self, u, v):
         antes = len(self.lista_adjacencias[u])
@@ -105,15 +117,19 @@ class Grafo:
     
     # Requisito 1
     def processar_emails(self, pasta_emails):
+
         parser = Parser()
+        #caminhando nos diretorios
         for root, dirs, files in os.walk(pasta_emails):
             for filename in files:
+
                 file_path = os.path.join(root, filename)
                 with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
                     content = file.read()
                     email = parser.parsestr(content)
                     from_email = email['from'].strip() if email['from'] else None
                     to_emails = email['to']
+
                     if from_email and to_emails:
                         recipients = to_emails.split(',')
                         for recipient in recipients:
@@ -125,7 +141,7 @@ class Grafo:
         with open(filename, 'w', encoding='utf-8') as file:
             for vertice, arestas in self.lista_adjacencias.items():
                 arestas_str = ' -> '.join(f"('{vizinho}', {peso})" for vizinho, peso in arestas)
-                file.write(f'{arestas_str}\n')
+                file.write(f'{vertice}: {arestas_str}\n')
 
     # Requisito 2
     def imprime_top_graus(self, tipo='saida'):
