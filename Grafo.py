@@ -4,13 +4,10 @@ import os
 import heapq
 
 class Grafo:
-    def __init__(self, direcionado=False, ponderado=False):
+    def __init__(self):
         self.lista_adjacencias = defaultdict(list)
-        self.direcionado = direcionado
-        self.ponderado = ponderado
         self.num_vertices = 0
         self.num_arestas = 0
-        print(self.ponderado)
 
     def adiciona_vertice(self, u):
         if u not in self.lista_adjacencias:
@@ -18,9 +15,7 @@ class Grafo:
             self.num_vertices += 1
 
     def adiciona_aresta(self, u, v, peso=1):
-        if not self.ponderado:
-            peso = 1
-
+        
         if v not in self.lista_adjacencias:
             self.adiciona_vertice(v)
         if u not in self.lista_adjacencias:
@@ -28,11 +23,8 @@ class Grafo:
 
         if not any(aresta for aresta in self.lista_adjacencias[u] if aresta[0] == v):
             self.lista_adjacencias[u].append((v, peso))
-            if not self.direcionado:
-                self.lista_adjacencias[v].append((u, peso))
             self.num_arestas += 1
-            if not self.direcionado and u != v:
-                self.num_arestas += 1
+                
         else:
             for to in self.lista_adjacencias[u]:
                 if to[0] == v:
@@ -43,27 +35,27 @@ class Grafo:
                     self.lista_adjacencias[u][indice] = nova_tupla
    
 
-    def remove_aresta(self, u, v):
-        antes = len(self.lista_adjacencias[u])
-        self.lista_adjacencias[u] = [aresta for aresta in self.lista_adjacencias[u] if aresta[0] != v]
-        depois = len(self.lista_adjacencias[u])
-        self.num_arestas -= antes - depois
-        if not self.direcionado:
-            antes = len(self.lista_adjacencias[v])
-            self.lista_adjacencias[v] = [aresta for aresta in self.lista_adjacencias[v] if aresta[0] != u]
-            depois = len(self.lista_adjacencias[v])
-            self.num_arestas -= antes - depois
+    # def remove_aresta(self, u, v):
+    #     antes = len(self.lista_adjacencias[u])
+    #     self.lista_adjacencias[u] = [aresta for aresta in self.lista_adjacencias[u] if aresta[0] != v]
+    #     depois = len(self.lista_adjacencias[u])
+    #     self.num_arestas -= antes - depois
+    #     if not self.direcionado:
+    #         antes = len(self.lista_adjacencias[v])
+    #         self.lista_adjacencias[v] = [aresta for aresta in self.lista_adjacencias[v] if aresta[0] != u]
+    #         depois = len(self.lista_adjacencias[v])
+    #         self.num_arestas -= antes - depois
 
-    def remove_vertice(self, u):
-        if u in self.lista_adjacencias:
-            self.num_arestas -= len(self.lista_adjacencias[u])
-            del self.lista_adjacencias[u]
-            self.num_vertices -= 1
-            for vertice in self.lista_adjacencias:
-                antes = len(self.lista_adjacencias[vertice])
-                self.lista_adjacencias[vertice] = [aresta for aresta in self.lista_adjacencias[vertice] if aresta[0] != u]
-                depois = len(self.lista_adjacencias[vertice])
-                self.num_arestas -= antes - depois
+    # def remove_vertice(self, u):
+    #     if u in self.lista_adjacencias:
+    #         self.num_arestas -= len(self.lista_adjacencias[u])
+    #         del self.lista_adjacencias[u]
+    #         self.num_vertices -= 1
+    #         for vertice in self.lista_adjacencias:
+    #             antes = len(self.lista_adjacencias[vertice])
+    #             self.lista_adjacencias[vertice] = [aresta for aresta in self.lista_adjacencias[vertice] if aresta[0] != u]
+    #             depois = len(self.lista_adjacencias[vertice])
+    #             self.num_arestas -= antes - depois
 
     def tem_aresta(self, u, v):
         return any(aresta for aresta in self.lista_adjacencias[u] if aresta[0] == v)
@@ -86,11 +78,8 @@ class Grafo:
     def retorna_adjacentes(self, u):
         return [aresta[0] for aresta in self.lista_adjacencias[u]]
 
-    def get_max_arestas(self):
-        if self.direcionado:
-            return self.num_vertices * (self.num_vertices - 1)
-        else:
-            return self.num_vertices * (self.num_vertices - 1) / 2
+#    def get_max_arestas(self):
+#        return self.num_vertices * (self.num_vertices - 1) / 2
 
     def imprime_lista_adjacencias(self):
         for vertice, arestas in self.lista_adjacencias.items():
@@ -147,6 +136,7 @@ class Grafo:
 
     # Requisito 2
     def imprime_top_graus(self, tipo='saida'):
+        print("imprime top Graus")
         lista_graus = []
         for vertice in self.lista_adjacencias:
             if tipo == 'saida':
@@ -168,18 +158,12 @@ class Grafo:
 
     # Requisito 3
     def e_euleriano(self):
-        if not self.direcionado:
-            for vertice in self.lista_adjacencias:
-                if self.grau(vertice) % 2 != 0:
-                    print(f"Vértice com grau ímpar: {vertice}")
-                    return False
-            return True
-        else:
-            for vertice in self.lista_adjacencias:
-                if self.grau_entrada(vertice) != self.grau_saida(vertice):
-                    print(f"Vértice com grau de entrada diferente do grau de saída: {vertice}")
-                    return False
-            return True
+    
+        for vertice in self.lista_adjacencias:
+            if self.grau_entrada(vertice) != self.grau_saida(vertice):
+                print(f"Vértice com grau de entrada diferente do grau de saída: {vertice}")
+                return False
+        return True
    
     # Requisito 4
     def bfs(self, u, v):

@@ -1,7 +1,7 @@
 from Grafo import Grafo
 
 if __name__ == "__main__":
-    grafo_emails = Grafo(direcionado=True, ponderado=True)
+    grafo_emails = Grafo()
     path = 'enron'
     grafo_emails.processar_emails(path)
     grafo_emails.salvar_lista_adjacencias('grafo_adjacencias_teste.txt')
