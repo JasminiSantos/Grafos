@@ -24,6 +24,9 @@ class Grafo:
         if v not in self.lista_adjacencias:
             self.adiciona_vertice(v)
 
+        if u not in self.lista_adjacencias:
+            self.adiciona_vertice(u)
+
         if not any(aresta for aresta in self.lista_adjacencias[u] if aresta[0] == v):
             self.lista_adjacencias[u].append((v, peso))
             if not self.direcionado:
