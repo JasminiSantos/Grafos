@@ -23,7 +23,10 @@ class Grafo:
 
         if v not in self.lista_adjacencias:
             self.adiciona_vertice(v)
+        if u not in self.lista_adjacencias:
+            self.adiciona_vertice(u)
 
+        #não existe nenhuma aresta
         if not any(aresta for aresta in self.lista_adjacencias[u] if aresta[0] == v):
             self.lista_adjacencias[u].append((v, peso))
             if not self.direcionado:
@@ -39,7 +42,7 @@ class Grafo:
                     nova_tupla = (to[0], novo_segundo_valor)
                     indice = self.lista_adjacencias[u].index(to)
                     self.lista_adjacencias[u][indice] = nova_tupla
-                    print(nova_tupla)
+   
 
     def remove_aresta(self, u, v):
         antes = len(self.lista_adjacencias[u])
