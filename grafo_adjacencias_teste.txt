@@ -1,11 +1,11 @@
 michelle.lokay@enron.com: 
 mark.mcconnell@enron.com: ('michelle.lokay@enron.com', 1) -> ('lindy.donoho@enron.com', 1)
 lindy.donoho@enron.com: 
-stephanie.harris@enron.com: 
-james.derrick@enron.com: ('stephanie.harris@enron.com', 2) -> ('hoytm@hughesluce.com', 1) -> ('thenninger@mail.law.utexas.edu', 1) -> ('rob.walls@enron.com', 1)
+rob.walls@enron.com: 
+james.derrick@enron.com: ('rob.walls@enron.com', 4) -> ('stephanie.harris@enron.com', 2) -> ('hoytm@hughesluce.com', 1) -> ('thenninger@mail.law.utexas.edu', 1)
+stephanie.harris@enron.com: ('rob.walls@enron.com', 1)
 hoytm@hughesluce.com: 
 thenninger@mail.law.utexas.edu: 
-rob.walls@enron.com: 
 macharta@yahoo.com: 
 mike.carson@enron.com: ('macharta@yahoo.com', 1) -> ('randoo@gateway.net', 2) -> ('susan@metronet.com', 1) -> ('carson@us.ibm.com', 1) -> ('kenrcars@aol.com', 1) -> ('mcarson@gtemail.net', 1)
 randoo@gateway.net: 

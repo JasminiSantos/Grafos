@@ -160,10 +160,11 @@ class Grafo:
         print(f"Top 20 graus de {tipo}:")
         for vertice, grau in lista_graus[:20]:
             print(f"{vertice}: {grau}")
+        print("\n")
 
     def informacoes_grafo(self):
-        print(f"Ordem do grafo: {self.num_vertices}")
-        print(f"Tamanho do grafo: {self.num_arestas}")
+        print(f"Ordem do grafo: {self.num_vertices}\n")
+        print(f"Tamanho do grafo: {self.num_arestas}\n")
         self.imprime_top_graus(tipo='saida')
         self.imprime_top_graus(tipo='entrada')
 
